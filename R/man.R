@@ -1,0 +1,129 @@
+
+#' Meta data and Notes (MAN)
+#'
+#' @description The function man() creates a metadata and notes (man) object
+#' which describes the format of a question from the Black Rock City Census.
+#'
+#' @param qname Question name. The name used to reference a question for
+#'              analysis. This name should be the same across years to enable
+#'              trend analysis.
+#' @param year The year the question was asked. Integer value with the format
+#'             19## or 20##.
+#' @param dname Data file name. The name the question is stored under in the
+#'              cleaned and weighted data file for Census responses for the
+#'              given year. For questions of type 'selectMultiple' prior to
+#'              2019, this value will be unique for each option. For years 2019
+#'              and later, this will be the same as qname.
+#' @param questionText The full text of the question as it was asked.
+#' @param questionType Type of the question. One of "selectOne",
+#'                     "selectMultiple", "selectScale", "textBoxNumeric",
+#'                     textBoxCharacter".
+#' @param responses Question responses. For "selectOne" and "selectMultiple"
+#'                  questions, the text for possible response selections
+#'                  as they were provided in the question for that year. For
+#'                  "selectScale", the text for each sub-question. For
+#'                  "textBox..." questions this should be NULL.
+#' @param rname Response name. For "selectOne" and "selectMutliple" questions,
+#'              the text used to reference the response or sub-question in the
+#'              cleaned and weighted data file. For "textBox..." question this
+#'              should be NULL.
+#' @param scaleOptions For "selectScale" questions, the text or numeric values
+#'                     for scale options as they were shown on the survey.
+#' @param reportingValues Values used to refer to or store the responses in the
+#'                        raw data outputs from Alchemer or other survey tools
+#'                        used in prior years. For "selectScale" questions this
+#'                        is the values used to store the scale options. For
+#'                        "textBox..." questions this should be NULL.
+#' @param writeInResponses Character vector of responses that have a write-in
+#'                         option. This should be a subset of fields provided
+#'                         in responses. This should be NULL for "textBox..."
+#'                         questions.
+#' @param wname Write-in name. Name used to refer to write-in responses in
+#'              cleaned and weighted data files.
+#' @param notes.qname Notes for a question that are pertinent to all years. This
+#'                    will be combined with the same field across all years
+#'                    when man objects are concatenated.
+#' @param notes.year Notes for a question that are pertinent to the given year.
+#'
+#' @returns
+#' @export
+#'
+#'
+#'
+#' @examples
+man <- function(qname, year, dname, questionText, questionType,
+                         responses = NULL, rname = NULL, scaleOptions = NULL,
+                         reportingValues = NULL, writeInResponses = NULL,
+                         wname = NULL, notes.qname = NA, notes.year = NA){
+
+  # Check for valid year input
+  Sys.year <- as.numeric(format(Sys.Date(), "%Y"))
+  lastBurnYear <- ifelse(Sys.Date() < as.Date(paste0(Sys.year, "-10-01")),
+                         Sys.year - 1, Sys.year)
+  if(!is.numeric(year) | year < 2013){
+    stop(paste0("year should be an integer greater than or equal to 2013 and
+                less than or equal to ",lastBurnYear, "."))
+  }
+
+  #Check for valid inputs by question type
+  if(questionType %in% c("selectOne", "selectMany")){
+    if(is.null(responses) | !is.character(responses)){
+      stop(paste0("A character vector for responses must be provided for ",
+                  questionType, " questions."))
+    }
+    if(is.null(rname) | !is.character(rname)){
+      stop(paste0("A character vector for rname must be provided for ",
+                  questionType, " questions."))
+    }
+    if(!is.null(scaleOptions)){
+      stop(paste0("scaleOptions should be NULL for ", questionType,
+                  " questions."))
+    }
+    #TODO add type checking conditional on year for reporting values.
+    if(!all(writeInResponses %in% responses)){
+      notPresent <- writeInResponses[!(writeInResponses %in% responses)]
+      stop("Values for writeInResponses must match a value provided in
+           reponses. ", do.call(paste, c(as.list(notPresent), list(sep = ", "))),
+           "are not present in given values for responeses.")
+    }
+    if(!is.null(writeInResponses) & (is.null(wname) |
+                                     length(wname) != length(writeInResponses))){
+      stop("writeInResponses is required to have a wname input of the same
+           length as writeInResponses.")
+    }
+    if(is.null(writeInResponses) & !is.null(wname)){
+      stop("")
+    }
+
+  }
+  else if(questionType == "selectScale"){
+
+  }
+  else if(questionType %in% c("textBoxNumeric", "textBoxCharacter")){
+
+  }
+  else{
+    stop("Question type must be one of 'selectOne', 'selectMany', 'selectScale',
+         'textBoxNumeric', 'textBoxCharacter'. See ?man for details.")
+  }
+
+  #Create single year entry for a question
+  yearList <- list(year = year,
+                   dname = dname,
+                   questionText = questionText,
+                   questionType = questionType,
+                   responses = makeResponsesList(responses,
+                                                 reportingValues,
+                                                 rname,
+                                                 questionType),
+                   writeIn = makeWriteInList(writeInResponses,
+                                             wname,
+                                             questionType),
+                   notes = notes.year)
+
+  #Create output
+  out <- list(qname = qname,
+              years = yearList,
+              notes = notes.qname)
+  return(out)
+}
