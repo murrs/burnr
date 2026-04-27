@@ -1,5 +1,4 @@
-
-#' Meta data and Notes (MAN)
+#' Metadata And Notes (MAN)
 #'
 #' @description The function man() creates a metadata and notes (man) object
 #' which describes the format of a question from the Black Rock City Census.
@@ -38,6 +37,8 @@
 #'                         option. This should be a subset of fields provided
 #'                         in responses. This should be NULL for "textBox..."
 #'                         questions.
+#' @param writeInTypes A character vector of the same length as writeInRespones.
+#' Values specify the type of write-in question, either "character" or "numeric".
 #' @param wname Write-in name. Name used to refer to write-in responses in
 #'              cleaned and weighted data files.
 #' @param notes.qname Notes for a question that are pertinent to all years. This
@@ -45,16 +46,97 @@
 #'                    when man objects are concatenated.
 #' @param notes.year Notes for a question that are pertinent to the given year.
 #'
-#' @returns
+#' @returns A 'man' object.
 #' @export
 #'
-#'
-#'
 #' @examples
+#' # 'selectOne' type question no write-in
+#' virgin25 <- man(qname = "virgin",
+#'                 year = 2025,
+#'                 dname = "virgin",
+#'                 questionText = "Was this your first time visiting Black Rock City?",
+#'                 questionType = "selectOne",
+#'                 responses = c("Yes, it was my first time",
+#'                               "No, I have been to Black Rock City before",
+#'                               "I did not go to Black Rock City in 2025"),
+#'                 rname = c("virgin",
+#'                           "notVirgin",
+#'                           "didNotGoIn2025"),
+#'                 reportingValues = c(1, 2, 3))
+#'
+#' # 'selectMany' type question with write-in
+#' raceEth25 <- man(qname = "raceEth",
+#'                  year = 2025,
+#'                  dname = "raceEth",
+#'                  questionText = "Which category best describes your race or ethnicity?",
+#'                  questionType = "selectMultiple",
+#'                  responses = c("Native American or Alaska Native",
+#'                                "Asian",
+#'                                "Black or African American",
+#'                                "Native Hawaiian or other Pacific Islander",
+#'                                "White/Caucasian",
+#'                                "Middle Eastern or North African",
+#'                                "Hispanic/Latino (e.g., Mexican, Puerto Rican, Cuban, Colombian)",
+#'                                "Other (please specify):"),
+#'                  rname = c("nativeAmericanAlaskan",
+#'                            "asian",
+#'                            "black",
+#'                            "nativeHawaiianPacificIslander",
+#'                            "white",
+#'                            "middleEasternNorthAfrican",
+#'                            "hispanic",
+#'                            "other"),
+#'                 reportingValues = c(2, 1, 5, 8, 4, 7, 4, 6),
+#'                 writeInResponses = c("Other (please specify):"),
+#'                 wname = "other",
+#'                 writeInTypes = c("character"),
+#'                 notes.qname = "The options for this question are based on
+#'                                the recommendations of the US Census.  The
+#'                                options were updated in 2022.")
+#'
+#' # 'selectScale' type question
+#' mediaManagedByBMP25 <- man(qname = "mediaManagedByBMP",
+#'                            year = 2025,
+#'                            dname = "mediaManagedByBMP",
+#'                            questionText = "Which of the following media managed by Burning Man Project do you use to receive news, information, and events related to Burning Man, and to engage in discussion on Burning Man topics?",
+#'                            questionType = "selectScale",
+#'                            responses = c("Jack Rabbit Speaks (JRS) e-newsletter",
+#'                                          "Burning Man website",
+#'                                          "Burning Man Journal",
+#'                                          "Burning Man Hive",
+#'                                          "Social media managed by Burning Man Project (Facebook, Instagram, Twitter/X, YouTube, etc.)",
+#'                                          "Eplaya"),
+#'                            scaleOptions = c("Never", "Rarely", "Often"),
+#'                            reportingValues = c(1, 2, 3),
+#'                            rname = c("jackrabbitSpeaks",
+#'                                      "burningManWebsite",
+#'                                      "burningManJournal",
+#'                                      "burningManHive",
+#'                                      "socialMedia",
+#'                                      "ePlaya"))
+#'
+#' # Pre-alchemer (2022) example
+#' virgin19 <- man(qname = "virgin",
+#'                 year = 2019,
+#'                 dname = "virgin",
+#'                 questionText = "Was this your first time visiting Black Rock City?",
+#'                 questionType = "selectOne",
+#'                 responses = c("Yes, it was my first time",
+#'                               "No, I had been to Black Rock City before",
+#'                               "I did not go to Black Rock City in 2019"),
+#'                 rname = c("virgin",
+#'                           "notVirgin",
+#'                           "didNotGoIn2019"),
+#'                 reportingValues = c(1, 2, 3))
+#'
+#' # Concatenate man objects (are many mans a men?)
+#' virginMan <- virgin25 + virgin19
+#'
 man <- function(qname, year, dname, questionText, questionType,
                          responses = NULL, rname = NULL, scaleOptions = NULL,
                          reportingValues = NULL, writeInResponses = NULL,
-                         wname = NULL, notes.qname = NA, notes.year = NA){
+                         writeInTypes = NULL, wname = NULL, notes.qname = NA,
+                         notes.year = NA){
 
   # Check for valid year input
   Sys.year <- as.numeric(format(Sys.Date(), "%Y"))
@@ -66,7 +148,7 @@ man <- function(qname, year, dname, questionText, questionType,
   }
 
   #Check for valid inputs by question type
-  if(questionType %in% c("selectOne", "selectMany")){
+  if(questionType %in% c("selectOne", "selectMultiple")){
     if(is.null(responses) | !is.character(responses)){
       stop(paste0("A character vector for responses must be provided for ",
                   questionType, " questions."))
@@ -80,6 +162,7 @@ man <- function(qname, year, dname, questionText, questionType,
                   " questions."))
     }
     #TODO add type checking conditional on year for reporting values.
+    #TODO check reporting values and rnames the same length as responses
     if(!all(writeInResponses %in% responses)){
       notPresent <- writeInResponses[!(writeInResponses %in% responses)]
       stop("Values for writeInResponses must match a value provided in
@@ -94,36 +177,45 @@ man <- function(qname, year, dname, questionText, questionType,
     if(is.null(writeInResponses) & !is.null(wname)){
       stop("")
     }
+    #TODO check writeInResponses, wname, and writeInTypes are all present if there is a writeIn option
 
   }
+  #TODO check inputs for selectScale
   else if(questionType == "selectScale"){
 
   }
+  #TODO check inputs for textBoxXXXX
   else if(questionType %in% c("textBoxNumeric", "textBoxCharacter")){
 
   }
   else{
-    stop("Question type must be one of 'selectOne', 'selectMany', 'selectScale',
+    stop("Question type must be one of 'selectOne', 'selectMultiple', 'selectScale',
          'textBoxNumeric', 'textBoxCharacter'. See ?man for details.")
   }
+  responseList <- makeResponseList(questionType = questionType,
+                                   responses = responses,
+                                   reportingValues = reportingValues,
+                                   scaleOptions = scaleOptions,
+                                   rname = rname)
+  writeInList <- makeWriteInList(writeInResponses = writeInResponses,
+                                 writeInTypes = writeInTypes,
+                                 wname)
 
   #Create single year entry for a question
-  yearList <- list(year = year,
-                   dname = dname,
+  yearList <- list(list(year = year,
+                    dname = dname,
                    questionText = questionText,
                    questionType = questionType,
-                   responses = makeResponsesList(responses,
-                                                 reportingValues,
-                                                 rname,
-                                                 questionType),
-                   writeIn = makeWriteInList(writeInResponses,
-                                             wname,
-                                             questionType),
-                   notes = notes.year)
+                   responses = responseList,
+                   writeIn = writeInList,
+                   notes = notes.year))
+  names(yearList) <- paste0("census", year)
 
   #Create output
-  out <- list(qname = qname,
-              years = yearList,
-              notes = notes.qname)
+  out <- list(list(qname = qname,
+                   years = yearList,
+                   notes = notes.qname))
+  names(out) <- qname
+  class(out) <- c("man", "list")
   return(out)
 }
