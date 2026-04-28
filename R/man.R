@@ -23,9 +23,12 @@
 #'                  "selectScale", the text for each sub-question. For
 #'                  "textBox..." questions this should be NULL.
 #' @param rname Response name. For "selectOne" and "selectMutliple" questions,
-#'              the text used to reference the response or sub-question in the
-#'              cleaned and weighted data file. For "textBox..." question this
-#'              should be NULL.
+#'              the alias names to refer tp the response in the cleaned and
+#'              weighted data file. For "selectScale" questions this should
+#'              be the alias name for the sub questions or categories. For
+#'              "textBox..." questions this should be NULL. See details for
+#'              style suggestions when creating the rnames when they do not
+#'              previously exist.
 #' @param scaleOptions For "selectScale" questions, the text or numeric values
 #'                     for scale options as they were shown on the survey.
 #' @param reportingValues Values used to refer to or store the responses in the
@@ -47,6 +50,11 @@
 #' @param notes.year Notes for a question that are pertinent to the given year.
 #'
 #' @returns A 'man' object.
+#'
+#' @details
+#' TODO
+#'
+#'
 #' @export
 #'
 #' @examples
