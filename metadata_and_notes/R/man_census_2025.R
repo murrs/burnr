@@ -54,9 +54,7 @@ man2025 <- man(qname = "virgin",
                 "Canada",
                 "otherCountry"),
       reportingValues = c(1, 2, 3, 4, 5),
-      writeInResponses = "Other (please specify country):",
-      wname = "otherCountry",
-      writeInType = "character") +
+      writeIn = c(otherCountry = "character")) +
 
   # ZIP code
   man(qname = "resideZIP",
@@ -112,8 +110,7 @@ man2025 <- man(qname = "virgin",
                     "I self describe as:"),
       rname = c("female", "male", "selfDescribe"),
       reportingValues = c(1, 2, 4),
-      writeInResponses = "I self describe as:",
-      writeInTypes = "character") +
+      writeIn = c(selfDescribe = "character")) +
 
   # Race and ethnicity
   man(qname = "race",
@@ -138,8 +135,7 @@ man2025 <- man(qname = "virgin",
                 "hispanic",
                 "other"),
       reportingValues = c(2,1,5,8,4,7,3,6),
-      writeInResponses = "Other (please specify):",
-      writeInType = "character") +
+      writeIn = c(other = "character")) +
 
   # Personal Income
   man(qname = "personalIncome",
@@ -236,7 +232,7 @@ man2025 <- man(qname = "virgin",
                     "Graduate degree (Master's, Doctorate, or equivalent) or equivalent",
                     "Other (please specify):",
                     "None of the above"),
-      rname = c("lessThanHighSchool",
+      rname = c("lessThanHighSchool", c(), #TODO
                 "highSchool",
                 "technicalVocational",
                 "someCollege",
@@ -248,8 +244,7 @@ man2025 <- man(qname = "virgin",
                 "other",
                 "none"),
       reportingValues = c(12, 13, 18, 14, 15, 16, 23, 24, 17, 19, 20),
-      writeInResponses = "Other (please specify):",
-      writeInTypes = "character") +
+      writeIn = c(other = "character")) +
 
   # Voted in last election
   man(qname = "voteInLastElection",
@@ -311,8 +306,7 @@ man2025 <- man(qname = "virgin",
                 "noneUnaffiliated",
                 "preferNotToState"),
       reportingValues = c(1,4,3,2,6,8,7,9),
-      writeInResponses = "Other US based political party (please specify)",
-      writeInTypes = "character") +
+      writeIn = c(otherUSPoliticalParty = "character")) +
 
   # Political views
   man(qname = "politicalViews",
@@ -343,8 +337,7 @@ man2025 <- man(qname = "virgin",
                 "noneApolitical",
                 "preferNotToState"),
       reportingValues = c(1,2,3,4,5,10,6,7,8,9,11),
-      writeInResponses = "Other (please specify):",
-      writeInTypes = "character") +
+      writeIn = c(other = "character")) +
 
   # Language
   man(qname = "language",
@@ -399,8 +392,7 @@ man2025 <- man(qname = "virgin",
                 "urdu",
                 "other"),
       reportingValues = c(1:23),
-      writeInResponses = "Other (please specify):",
-      writeInTypes = "character") +
+      writeIn = c(other = "character")) +
 
   # Spirituality
   man(qname = "spirituality",
@@ -443,9 +435,7 @@ man2025 <- man(qname = "virgin",
                 "refuseToLabel",
                 "selfDescribe"),
       reportingValues = c(1,2,3,4,5,6,8),
-      writeInResponses = "I self-describe as:",
-      writeInTypes = "character",
-      wname = "selfDescribe") +
+      writeIn = c(selfDescribe = "character")) +
 
   # Gender Identity
   man(qname = "genderIdentity",
@@ -518,10 +508,8 @@ man2025 <- man(qname = "virgin",
                 "otherFarmAnimals",
                 "otherPetTypes"),
       reportingValues = c(1:11),
-      writeInResponses = c("Other farm animals (please specify):",
-                           "Other (please specify):"),
-      writeInTypes = c("character", "character"),
-      wname = c("otherFarmAnimals", "otherPetTypes")) +
+      writeIn = c(otherFarmAnimals = "character",
+                  otherPetTypes = "character")) +
 
   # Media managed by Burning Man Project
   man(qname = "mediaManagedByBMP",
@@ -575,9 +563,7 @@ man2025 <- man(qname = "virgin",
                 "HIVE",
                 "other"),
       reportingValues = c(1,2,13:22),
-      writeInResponses = "Other (specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   #
   man(qname = "valuableInformationFromBMP",
@@ -614,8 +600,7 @@ man2025 <- man(qname = "virgin",
                 "sustainability",
                 "other"),
       reportingValues = c(1,2,3,4,5,11,6,12,7,8,9,13,14,10),
-      writeInResponses = "Other (please specify):",
-      writeInTypes = "character") +
+      writeIn = c(other = "character")) +
 
   # Radio
   man(qname = "radio",
@@ -632,9 +617,7 @@ man2025 <- man(qname = "virgin",
                 "other",
                 "none"),
       reportingValues = c(1,2,4,5),
-      writeInResponses = "Other (specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Devices Used
   man(qname = "devicesUsedAtBRC",
@@ -695,9 +678,7 @@ man2025 <- man(qname = "virgin",
                 "other",
                 "none"),
       reportingValues = c(1,2,3,4,5,6,7),
-      writeInResponses = "Other (specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Burner Identity
   man(qname = "burnerIdentity",
@@ -762,9 +743,7 @@ man2025 <- man(qname = "virgin",
                 "other",
                 "notInvolved"),
       reportingValues = c(1,8,12,9,2,3,4,5,10,11,6,13),
-      writeInResponses = "Other (please specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Interest in becoming involved with the Burning Man community
   man(qname = "interestBurningManCommunity",
@@ -801,9 +780,7 @@ man2025 <- man(qname = "virgin",
                 "volunteerWithRegional",
                 "other"),
       reportingValues = c(1,2,3,4,5),
-      writeInResponses = "In other ways (please specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Charitable donations
   man(qname = "charitableDonation",
@@ -842,9 +819,7 @@ man2025 <- man(qname = "virgin",
                 "selfInitiatedGoodDeeds",
                 "otherNonprofitsCharities"),
       reportingValues = c(1,2,3,11,4,5,6,7,12,13,15,14,8,9,10),
-      writeInResponses = "Other nonprofits or charities (please specify):",
-      writeInTypes = "character",
-      wname = "otherNonprofitsCharities") +
+      writeIn = c(otherNonprofitsCharities = "character")) +
 
   # Importance of the 10 principles
   man(qname = "tenPrinciplesHowImportant",
@@ -1213,14 +1188,356 @@ man2025 <- man(qname = "virgin",
       rname = c("yes", "no", "dontKnow"),
       reportingValues = c(1, 2, 3)) +
 
-  #
-  man(qname = "",
+  # Environmental impact
+  man(qname = "reduceEnvironmentalImpact",
       year = 2025,
-      dname = "",
-      questionText = "",
-      questionType = "",
-      responses = c(),
-      rname = c(),
-      reportingValues = c()) +
+      dname = "reduceEnvironmentalImpact",
+      questionText = "Which of the following actions were you motivated to take this year to reduce your environmental impact in Black Rock City? Check all that apply. ",
+      questionType = "selectMultiple",
+      responses = c("I am a member of a camp that creates sustainability-related content for other participants to experience",
+                    "I used renewable energy (e.g., solar power) at my camp or project",
+                    "I had a waste-reduction plan with my camp or crew",
+                    "I minimized food waste by planning carefully, feeding others, or composting",
+                    "I collected my greywater to be repurposed",
+                    "I reduced or avoided single-use plastic for drinking water and other consumable items",
+                    "I engaged in Leave No Trace and did more MOOP sweeps on playa",
+                    "I actively helped others learn to reduce their environmental impact",
+                    "I brought my aluminum cans to Recycle Camp",
+                    "Other (please specify):",
+                    "None of the above"),
+      rname = c("memberOfSustainableCamp",
+                "usedRenewableEnergy",
+                "wasteReductionPlan",
+                "minimizedFoodWaste",
+                "collectedGreywater",
+                "reducedPlastic",
+                "leaveNoTrace",
+                "helpedOthersLearn",
+                "cansToRecycleCamp",
+                "other",
+                "none"),
+      reportingValues = c(1,2,3,4,5,6,7,8,9,10,11),
+      writeIn = c(other = "character")) +
+
+  # Create Diversity
+  man(qname = "createDiversity",
+      year = 2025,
+      dname = "createDiversity",
+      questionText = "How did you (and/or your camp or project) help create a more welcoming and diverse Black Rock City this year? We're especially interested in actions that support inclusion across age, nationality, politics, sexual orientation, race, and more.",
+      questionType = "selectMultiple",
+      responses = c("The camp or project(s) I am involved in welcomed new participants who are members of under-represented groups in BRC",
+                    "My camp or project offers financial assistance to low-income Burners or other under-represented groups",
+                    "Other (please specify):",
+                    "None of the above"),
+      rname = c("welcomedUnderRepresentedGroups",
+                "financialAssistance",
+                "other",
+                "none"),
+      reportingValues = c(1,2,3,4),
+      writeIn = c(other = "character")) +
+
+  # Challenges to attending Burning Man
+  man(qname = "attendChallenge",
+      year = 2025,
+      dname = "attendChallenge",
+      questionText = "What was your biggest challenge in planning to attend this year?",
+      questionType = "selectOne",
+      responses = c("Getting a ticket",
+                    "Cost of attendance",
+                    "Finding transportation",
+                    "Getting time off work/school",
+                    "Finding people to attend with",
+                    "Learning what to bring/how to prepare",
+                    "Other (please specify):",
+                    "There was no challenge involved in the planning"),
+      rname = c("ticket",
+                "cost",
+                "transportation",
+                "timeOff",
+                "findingPeople",
+                "learning",
+                "other",
+                "noChallenge"),
+      reportingValues = c(1,2,3,4,5,6,7,8),
+      writeIn = c(other = "character")) +
+
+  # Attend Burning Many Next Year
+  man(qname = "attendNextYear",
+      year = 2025,
+      dname = "attendNextYear",
+      questionText = "Do you plan to come back to Black Rock City next year?",
+      questionType = "selectOne",
+      responses = c("Absolutely",
+                    "Probably",
+                    "Not sure",
+                    "Probably not",
+                    "Absolutely not"),
+      rname = c("absolutely",
+                "probably",
+                "notSure",
+                "probablyNot",
+                "Absolutely not"),
+      reportingValues = c(1,2,3,4,5)) +
+
+  # Come back to BRC in the future
+  man(qname = "attendTwoOrMoreYears",
+      year = 2025,
+      dname = "attendTwoOrMoreYears",
+      questionText = "Do you plan to come back to Black Rock City in 2027 or further in the future?",
+      questionType = "selectOne",
+      responses = c("Absolutely",
+                    "Probably",
+                    "Not sure",
+                    "Probably not",
+                    "Absolutely not"),
+      rname = c("absolutely",
+                "probably",
+                "notSure",
+                "probablyNot",
+                "absolutelyNot"),
+      reportingValues = c(1,2,3,4,5)) +
+
+  # Reason to Return to BRC
+  man(qname = "reasonToReturnToBRC",
+      year = 2025,
+      dname = "reasonToReturnToBRC",
+      questionText = "Which of the following reasons indicate why you might return to Black Rock City in the future? Check all that apply.",
+      questionType = "selectMultiple",
+      responses = c("To volunteer with a theme camp or Burning Man Project department",
+                    "To see and experience the art",
+                    "To create or work on a project",
+                    "To be with friends or like-minded people or feel a sense of belonging",
+                    "To meet people who are different from me",
+                    "To play and experience freedom",
+                    "To consume intoxicants",
+                    "To escape the world for a time",
+                    "To express myself",
+                    "To experience gifting and decommodification",
+                    "To rely on myself and practice useful skills",
+                    "To perform and practice artistic skills",
+                    "To satisfy my curiosity or check it off my 'bucket list'",
+                    "To grow or connect spiritually",
+                    "To satisfy someone else's wish that I be there",
+                    "Other (please specify):"),
+      rname = c("volunteer",
+                "seeExperienceArt",
+                "createWorkOnProject",
+                "likeMindedPeopleBelonging",
+                "meetPeopleDifferentFromMe",
+                "playExperienceFreedom",
+                "consumeIntoxicants",
+                "escapeWorld",
+                "expressMyself",
+                "giftingDecommodication",
+                "relyOnMyselfPracticeSkills",
+                "performPracticeArtSkills",
+                "curiosityBucketList",
+                "growConnectSpiritually",
+                "satisfySomeoneElse",
+                "other"),
+      reportingValues = c(1:16),
+      writeIn = c(other = "character")) +
+
+  # How did you hear about Census
+  man(qname = "hearAboutCensus",
+      year = 2025,
+      dname = "hearAboutCensus",
+      questionText = "How did you hear about the BRC Census online survey (the form you are currently filling out)?",
+      questionType = "selectMultiple",
+      responses = c("Email including a link",
+                    "Word of mouth (e.g. friends, campmates, etc.)",
+                    "I have known about it for multiple years and always try to fill it out",
+                    "I saw a Census sign during exodus",
+                    "I was randomly sampled at Gate, Airport, or on a Burner Express Bus",
+                    "I filled out a Field Notes book and saw the reminder in the book",
+                    "I heard about it on BMIR",
+                    "Through my Burner Profile",
+                    "I was gifted a Census sticker",
+                    "I saw a post about it on the Burning Man Journal",
+                    "I saw a reminder on the Jackrabbit Speaks",
+                    "I received an email about it from a volunteer department, theme camp, etc.",
+                    "I saw a Census sign in a theme camp",
+                    "ePlaya, Facebook, Reddit, Instagram, and/or other social networks",
+                    "I found a link to the survey in the header of the burningman.org website",
+                    "SF Decompression or another regional Burning Man event",
+                    "Other - Please specify:"),
+      rname = c("emailWithLink",
+                "wordOfMouth",
+                "knownForYears",
+                "censusSignExodus",
+                "randomSample",
+                "fieldNotes",
+                "BMIR",
+                "burnerProfile",
+                "censusSticker",
+                "burningManJournal",
+                "jackrabbitSpeaks",
+                "emailDepartmentCamp",
+                "censusSignCamp",
+                "socialNetwork",
+                "burningManWebsite",
+                "decompression",
+                "other"),
+      reportingValues = c(15,1,2,3,4,5,6,16,7,8,9,10,11,12,17,13,14),
+      writeIn = c(other = "character")) +
+
+  # Seen the results of the BRC Census
+  man(qname = "seenCensusResults",
+      year = 2025,
+      dname = "seenCensusResults",
+      questionText = "Have you ever seen the results of the Black Rock City Census from this year or past years? Check all that apply.",
+      questionType = "selectMultiple",
+      responses = c("Yes, I read a Black Rock City Census report (blackrockcitycensus.org) in the past",
+                    "Yes, I saw Census results elsewhere (e.g., Burning Man Journal, Census Lab on playa)",
+                    "No, I've never seen Black Rock City Census results"),
+      rname = c("yesReadReport",
+                "yesElsewhere",
+                "no"),
+      reportingValues = c(1,2,3)) +
+
+  # Data Nerds
+  man(qname = "dataNerds",
+      year = 2025,
+      dname = "dataNerds",
+      questionText = "Now that you have completed the core section of the Black Rock City Census, are you willing to answer up to 16 more questions to support academic researchers studying different aspects of the Burning Man experience?",
+      questionType = "selectOne",
+      responses = c("Yes", "No",),
+      rname = c("yes", "no"),
+      reportingValues = c(1, 2)) +
+
+  # Use a playa name
+  man(qname = "playaNameUse",
+      year = 2025,
+      dname = "playaNameUse",
+      questionText = "Did you use a playa name this year at Burning Man?",
+      questionType = "selectOne",
+      responses = c("Yes", "No"),
+      rname = c("yes", "no"),
+      reportingValues = c(1,2)) +
+
+  # Acqure a playa name
+  man(qname = "playaNameAcquire",
+      year = 2025,
+      dname = "playaNameAcquire",
+      questionText = "How did you acquire this playa name?",
+      questionType = "selectOne",
+      responses = c("I chose it myself",
+                    "It was given to me by a Burning Man participant",
+                    "It was given to me by someone outside the Burning Man community",
+                    "Other (please specify):"),
+      rname = c("choseItMyself",
+                "givenToMeParticipant",
+                "givenToMeOutside",
+                "other"),
+      reportingValues = c(1,2,3,4),
+      writeIn = c(other = "character")) +
+
+  # Years playa name has been used
+  man(qname = "playaNameYears",
+      year = 2025,
+      dname = "playaNameYears",
+      questionText = "How many years have you been using this playa name?",
+      questionType = "selectOne",
+      responses = c("I started using this playa name this year",
+                    "I have used this playa name for multiple years (please specify the number of years):",),
+      rname = c("startedThisYear", "usedMultipleYears"),
+      reportingValues = c(1, 2),
+      writeIn = c(usedMutipleYears = "numeric")) +
+
+  #
+  man(qname = "playaNameEffect",
+      year = 2025,
+      dname = "playaNameEffect",
+      questionText = "To what extend did your playa name...",
+      questionType = "selectScale",
+      responses = c("Reflect your identity in the default world",
+                    "Reflect an identity that you do not usually express in the default world",
+                    "Reflect who you would like to be in your daily life",
+                    "Enhance the way others perceive you or connect with you",
+                    "Help you feel free of stigma or marginalization due to your default world identity",
+                    "Help you be more engaged or present at Burning Man",
+                    "Help you maintain your privacy or anonymity at Burning Man",
+                    "Help you feel more comfortable or less shy communicating with others at Burning Man"),
+      rname = c("reflectDefaultIdentity",
+                "reflectUnusualIdentity",
+                "reflectDailyLife",
+                "enchanceOthersPerception",
+                "freeOfStigma",
+                "beMoreEngagedPresent",
+                "maintainPrivacy",
+                "feelComfortableCommunicating"),
+      scaleOptions = c("Not at all",
+                       "Slightly",
+                       "Moderately",
+                       "Very much",
+                       "Extremely"),
+      reportingValues = c(1,2,3,4,5)) +
+
+  # Contribution to making art
+  man(qname = "artMakingContribute",
+      year = 2025,
+      dname = "artMakingContribute",
+      questionText = "Did you contribute to artmaking for Burning Man this year? Artmaking is defined as anything you participate in that generates performative, digital, or material objects for creative expression. Check all that apply.",
+      questionType = "selectMultiple",
+      responses = c("Yes, I contributed to making artistic material objects (e.g., sculpture, painting, jewelry, clothing)",
+                    "Yes, I contributed to making digital art (e.g., photography, videos, recorded music)",
+                    "Yes, I contributed to performative art (e.g., dance, fire spinning, musical instrument, skit)",
+                    "Yes, I contributed to another art form (please specify):",
+                    "No, I did not contribute to artmaking"),
+      rname = c("yesContributedMaterial",
+                "yesContributedDigital",
+                "yesContributedPerformative",
+                "yesContributedOtherArt",
+                "no"),
+      reportingValues = c(1,2,5,6,7),
+      writeIn = c(yesContributedOtherArt = "character")) +
+
+  # Importance of making art
+  man(qname = "artMakingImportance",
+      year = 2025,
+      dname = "artMakingImportance",
+      questionText = "How important was artmaking (your own or other people's artmaking) to your experience at Burning Man?",
+      questionType = "selectOne",
+      responses = c("Most important, it was my primary purpose for attending Burning Man this year",
+                    "Very important",
+                    "Important",
+                    "Somewhat important",
+                    "Not important"),
+      rname = c("mostImportant",
+                "veryImportant",
+                "important",
+                "somewhatImportant",
+                "notImportant"),
+      reportingValues = c(1,2,3,4,5)) +
+
+  # Art Making Avenue
+  man(qname = "artMakingAvenue",
+      year = 2025,
+      dname = "artMakingAvenue",
+      questionText = "Is Burning Man your primary artmaking avenue?",
+      questionType = "selectOne",
+      responses = c("Yes", "No", "I have no artmaking avenue"),
+      rname = c("yes", "no", "noAvenue"),
+      reportingValues = c(1,2,3)) +
+
+  # Make art with friends
+  man(qname = "artMakingFriends",
+      year = 2025,
+      dname = "artMakingFriends",
+      questionText = "Did you make new friends by participating in artmaking for/at Burning Man this year?",
+      questionType = "selectOne",
+      responses = c("Yes", "No"),
+      rname = c("yes", "no"),
+      reportingValues = c(1, 2)) +
+
+  # Collaborate on making art
+  man(qname = "artMakingCollaborate",
+      year = 2025,
+      dname = "artMakingCollaborate",
+      questionText = "Do you collaborate with people from the Burning Man community on artmaking that is unrelated to Burning Man?",
+      questionType = "selectOne",
+      responses = c("Yes", "No"),
+      rname = c("yes", "no"),
+      reportingValues = c(1, 2)) +
 
 

@@ -36,14 +36,13 @@
 #'                        used in prior years. For "selectScale" questions this
 #'                        is the values used to store the scale options. For
 #'                        "textBox..." questions this should be NULL.
-#' @param writeInResponses Character vector of responses that have a write-in
-#'                         option. This should be a subset of fields provided
-#'                         in responses. This should be NULL for "textBox..."
-#'                         questions.
-#' @param writeInTypes A character vector of the same length as writeInRespones.
-#' Values specify the type of write-in question, either "character" or "numeric".
-#' @param wname Write-in name. Name used to refer to write-in responses in
-#'              cleaned and weighted data files.
+#' @param writeIn Named character vector. Names are the rname values
+#'                         that of response options that have an additional
+#'                         text box option. Values should either be 'character',
+#'                         'numeric' or a regular expression. If a regular
+#'                         expression is supplied the entered write-in response
+#'                         will return NA if it is not matched by the given
+#'                         regular expression.
 #' @param notes.qname Notes for a question that are pertinent to all years. This
 #'                    will be combined with the same field across all years
 #'                    when man objects are concatenated.
@@ -95,9 +94,7 @@
 #'                            "hispanic",
 #'                            "other"),
 #'                 reportingValues = c(2, 1, 5, 8, 4, 7, 4, 6),
-#'                 writeInResponses = c("Other (please specify):"),
-#'                 wname = "other",
-#'                 writeInTypes = c("character"),
+#'                 writeIn = c(other = "character"),
 #'                 notes.qname = "The options for this question are based on
 #'                                the recommendations of the US Census.  The
 #'                                options were updated in 2022.")
@@ -171,21 +168,13 @@ man <- function(qname, year, dname, questionText, questionType,
     }
     #TODO add type checking conditional on year for reporting values.
     #TODO check reporting values and rnames the same length as responses
-    if(!all(writeInResponses %in% responses)){
-      notPresent <- writeInResponses[!(writeInResponses %in% responses)]
-      stop("Values for writeInResponses must match a value provided in
-           reponses. ", do.call(paste, c(as.list(notPresent), list(sep = ", "))),
-           "are not present in given values for responeses.")
+    if(!all(names(writeInResponses) %in% rname)){
+      notPresent <- names(writeIn)[!(names(writeIn) %in% rname)]
+      stop("Values for writeIn must match a value provided in
+           rname. ", do.call(paste, c(as.list(notPresent), list(sep = ", "))),
+           "are not present in given values for rname.")
     }
-    if(!is.null(writeInResponses) & (is.null(wname) |
-                                     length(wname) != length(writeInResponses))){
-      stop("writeInResponses is required to have a wname input of the same
-           length as writeInResponses.")
-    }
-    if(is.null(writeInResponses) & !is.null(wname)){
-      stop("")
-    }
-    #TODO check writeInResponses, wname, and writeInTypes are all present if there is a writeIn option
+    #TODO check writeInResponses for valid inputs
 
   }
   #TODO check inputs for selectScale
@@ -205,9 +194,9 @@ man <- function(qname, year, dname, questionText, questionType,
                                    reportingValues = reportingValues,
                                    scaleOptions = scaleOptions,
                                    rname = rname)
-  writeInList <- makeWriteInList(writeInResponses = writeInResponses,
-                                 writeInTypes = writeInTypes,
-                                 wname)
+  # writeInList <- makeWriteInList(writeInResponses = writeInResponses,
+  #                                writeInTypes = writeInTypes,
+  #                                wname)
 
   #Create single year entry for a question
   yearList <- list(list(year = year,
@@ -215,7 +204,7 @@ man <- function(qname, year, dname, questionText, questionType,
                    questionText = questionText,
                    questionType = questionType,
                    responses = responseList,
-                   writeIn = writeInList,
+                   writeIn = writeIn,
                    notes = notes.year))
   names(yearList) <- paste0("census", year)
 
