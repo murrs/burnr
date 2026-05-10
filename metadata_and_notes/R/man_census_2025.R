@@ -984,9 +984,7 @@ man2025 <- man(qname = "virgin",
                 "airport",
                 "other"),
       reportingValues = c(1,2,3,4,5,6),
-      writeInResposes = "Other (please specify)",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Gerlach Stops
   man(qname = "gerlachStops",
@@ -1019,9 +1017,7 @@ man2025 <- man(qname = "virgin",
                 "roadsideNonfoodVendor",
                 "other"),
       reportingValues = c(13,1:11),
-      writeInRespones = "Other (please specify):",
-      writeInTypes = "character",
-      wname = "other") +
+      writeIn = c(other = "character")) +
 
   # Ride a bike in BRC
   man(qname = "rideBike",
@@ -1401,7 +1397,7 @@ man2025 <- man(qname = "virgin",
       dname = "dataNerds",
       questionText = "Now that you have completed the core section of the Black Rock City Census, are you willing to answer up to 16 more questions to support academic researchers studying different aspects of the Burning Man experience?",
       questionType = "selectOne",
-      responses = c("Yes", "No",),
+      responses = c("Yes", "No"),
       rname = c("yes", "no"),
       reportingValues = c(1, 2)) +
 
@@ -1439,10 +1435,10 @@ man2025 <- man(qname = "virgin",
       questionText = "How many years have you been using this playa name?",
       questionType = "selectOne",
       responses = c("I started using this playa name this year",
-                    "I have used this playa name for multiple years (please specify the number of years):",),
+                    "I have used this playa name for multiple years (please specify the number of years):"),
       rname = c("startedThisYear", "usedMultipleYears"),
       reportingValues = c(1, 2),
-      writeIn = c(usedMutipleYears = "numeric")) +
+      writeIn = c(usedMultipleYears = "numeric")) +
 
   #
   man(qname = "playaNameEffect",
@@ -1538,6 +1534,6 @@ man2025 <- man(qname = "virgin",
       questionType = "selectOne",
       responses = c("Yes", "No"),
       rname = c("yes", "no"),
-      reportingValues = c(1, 2)) +
+      reportingValues = c(1, 2))
 
-
+jsonlite::write_json(man2025, path = "man2025.json")

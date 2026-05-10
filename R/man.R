@@ -139,9 +139,8 @@
 #'
 man <- function(qname, year, dname, questionText, questionType,
                          responses = NULL, rname = NULL, scaleOptions = NULL,
-                         reportingValues = NULL, writeInResponses = NULL,
-                         writeInTypes = NULL, wname = NULL, notes.qname = NA,
-                         notes.year = NA){
+                         reportingValues = NULL, writeIn = NULL,
+                         notes.qname = NA, notes.year = NA){
 
   # Check for valid year input
   Sys.year <- as.numeric(format(Sys.Date(), "%Y"))
@@ -168,7 +167,7 @@ man <- function(qname, year, dname, questionText, questionType,
     }
     #TODO add type checking conditional on year for reporting values.
     #TODO check reporting values and rnames the same length as responses
-    if(!all(names(writeInResponses) %in% rname)){
+    if(!all(names(writeIn) %in% rname)){
       notPresent <- names(writeIn)[!(names(writeIn) %in% rname)]
       stop("Values for writeIn must match a value provided in
            rname. ", do.call(paste, c(as.list(notPresent), list(sep = ", "))),
